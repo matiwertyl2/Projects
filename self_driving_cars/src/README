@@ -1,0 +1,49 @@
+You can evolve new cars by using:
+  - Evolution.py - evolves standard neural network of fixed and regular structure
+  - DagEvolution.py - evolves "neural network" that is directed acyclic graph,
+                      but the structure itself can change during evolution process
+
+In both types of evolution there is a few parameters that you should set
+  - create random or some special tracks and set their lengths
+  - rmin, rmax - it is the range of initial weights of edges
+  - you can change the structure of standard neural network in Const.py : network_layers_shape
+  - frames_limit - it is the number of ticks cars have to drive
+
+
+There are number of parameters you can change in Const.py, more information
+in the comments. But be careful - if you set some crazy parameters, everything will go nuts !
+(ex. car width bigger than track width - how can it drive then?)
+
+The default directories where the data will appear are set in Const.py
+You can see there tracks that are currently offered to you to start evolution.
+
+After completing evolution you can test evolved cars and collect some nice pictures
+by running Aftermath.py. You only have to choose the type of evolution you have run.
+
+
+Short description of files:
+  AI:
+
+    - Network - regular network + related utilities
+    - DagNetwork - network of aribtrary structure + related utilities
+    - Brain - decision making mechanism, takes inputs, passes through the network
+              and return outputs
+  Evolution:
+
+    - Evolution - evolution of normal neural network
+    - DagEvolution - evolution of directed acyclic networks
+    - EvolUtils - some functions useful for further development and possible other
+                  evolution methods
+    - Aftermath
+
+  Environment:
+
+    - Geometry - set of basic object needed to create other, more interesting things
+    - Car - drives, provides inputs (lengths of sensors and speed) to its brain
+    - Track - the track on which cars drive. There are several options of creating tracks,
+              there are also some benchmarks for testing cars.
+
+  Simulation:
+
+    - Simulation - creates simulation of driving cars on the given track
+    - Movies - combines simulation movies and brain images to create the final content

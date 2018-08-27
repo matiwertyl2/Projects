@@ -1,0 +1,28 @@
+Krótka instrukcja uruchamiania i obsługi:
+	1. Potrzebna jest biblioteka moviepy, instalacja : (sudo) pip install moviepy
+	   https://zulko.github.io/moviepy/install.html
+	2. Struktura folderów w projekcie musi być następująca:
+		- src
+		- images 
+			- sim
+			- simdag
+	   Dane generowane podczas działania algorytmu sa wrzucane do folderów sim i simdag (w zależności od rodzaju algorytmu)
+	
+	3. W pliku Const.py można ustalać różne stałe.
+	4. Pliki Evolution.py oraz DagEvolution.py odpowiadają za ewolucję sieci. 
+		- wewnątrz plików można zmieniać wielkości torów do uczenia i ich typy (zalecany typ to random, pozostałe można znaleźć
+		  w pliku Track.py)
+		- rmin, rmax - przedział początkowych wag
+		- pozostałe parametry mają (mam nadzieję) intuicyjne nazwy.
+		- Należy uruchamiać programy będąc w folderze src
+		- Po uruchomieniu będziemy pytani, czy akceptujemy tory od uczenia. Można je zobaczyć w folderach sim / simdag
+			- odpowiedzi yes / no / exit 
+		- Podczas działania programu wypisywane są wartości funkcji celu dla każdego auta, a co jakiś czas niektóre dane są
+		  zapisywane w sim / simdag. 
+	5. Po zakończeniu obliczeń można stworzyć różne ciekawe wizualizacje uruchamiając Aftermath.py. Zostaniemy spytani o rodzaj sieci, 
+	   którą ewoluowaliśmy. Wszystkie pliki zapisywane są w sim / simdag
+	6. Auta zapisane są w plikach population.txt. Można je wczytać:
+		- W przypadku zwykłej sieci wystarczy załadować tablicę z pliku i przekazać do funkcji create_network wraz z opisem warstw
+		- W przypadku sieci DAG można użyć funkcji load/save_population.
+
+			
