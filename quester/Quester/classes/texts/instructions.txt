@@ -1,0 +1,12 @@
+Your aim is to complete a quest shown in the top right corner. 
+
+To do this you need to bring some items to the quest altar.
+
+You can find items on the map, but some of them appear only after certain mob is killed.
+
+Be careful - if you loose all your health it is game over. But don't worry, our world is full of food which regenerates your health
+
+Unfortunately you will face many monsters in the realm. You can can fight with them using your normal or special attacks. 
+Be smart ! The stronger attack is, the longer it reloads ! Use them wisely.
+
+

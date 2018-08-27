@@ -1,0 +1,7 @@
+  JTextArea display = new JTextArea ( 16, 58 );
+    display.setLineWrap(true);
+    display.setWrapStyleWord(true);
+    display.setText("kibdsbcjdsbcjd cdsckjdbkcjbdscd cdjbckjdbs");
+    display.setEditable ( false ); // set textArea non-editable
+    JScrollPane scroll = new JScrollPane ( display );
+    scroll.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );

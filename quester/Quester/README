@@ -1,0 +1,80 @@
+The Quester was created as the project for Object Programming course
+
+All code is written in Java. For GUI Swing library was used.
+
+
+If you are Linux user you should use Quester file to play the game. 
+For Windows, Quester.jar is a better choice. 
+
+In order to play it on Windows you have to install Java.
+Here is how to do it : https://www.java.com/en/download/help/windows_manual_download.xml
+
+Feel free to modify the code. Adding new mobs or items is fairly easy.
+
+	Items :
+The easiest way is to create subclass of Item class. 
+Then you have to write constructor with following parameters:
+	- path to the item image (String)
+	- unique ID for the item
+	- rarity
+
+	MyItem () {
+		super (path, ID, rarity);
+	}
+
+If you want the item to appear in Quests or on Board , you have to add it into questItems or boardItems in Const class.
+
+	Mobs :
+Each mob consists of:
+	- speed (int)
+	- healthPoints (int)
+	- weapon
+	- animation
+	- item
+	- rarity (int)
+	- ID (int)
+
+You have to create a subclass of Mob class and write following methods:
+	
+	MyMob (int x, int y, Player player) {
+		super (x, y, player, speed, healthPoints, weapon, animation, item, rarity, ID);
+	}
+
+	MyMob (  YourMob m) {
+		super (m);
+	}
+
+	MyMob copy ( MyMob m) {
+		return new MyMob(m);	
+	}
+
+Last step is to add YourMob into mobsToSpawn array in spawnMobs method in Board class 
+
+	Animations :
+Create a subclass of Animation class and write following methods:
+	
+	MyAnimation () {
+		super (right, left, down, up, stay, frequency);
+	}
+
+	where right, left, down, up, stay are arrays of Strings that are paths to the images you want to use as animation.
+	(for example left means animation when Mob is turned left)
+Make sure each array has the same length !
+Frequency is the parameter which says how fast the animation is.
+
+	Weapons :
+Create a subclass of class Weapon and write following methods: 
+	
+	MyWeapon () {
+		super (strength, range, frequency, animation, multiAttack, icon);
+	}
+
+	where :
+		strength (int) - how many hitPoints it takes
+		range (int) - the range of the weapon
+		frequency (int) - how long you have to wait to use the weapon again
+		animation - animation of weapon attack
+		multiAttack (boolean) - true if can harm many enemies at once
+		icon (String) - path to the image that represents the weapon
+
+		

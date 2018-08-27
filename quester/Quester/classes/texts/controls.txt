@@ -1,0 +1,21 @@
+Arrows - movement
+
+Spacebar - sprint
+
+1 - common attack
+
+2, 3, 4 - special attacks
+
+W - use item
+
+R - remove item
+
+Q - previous item
+
+E - next item
+
+P - pause
+
+
+
+
