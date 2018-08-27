@@ -1,0 +1,12 @@
+<%- include('partials/head.ejs', { title: 'Error' }) %>
+<%- include('partials/auto-menu.ejs') %>
+<%- include('partials/alert.ejs') %>
+
+<div class="alert alert-danger" role="alert">
+    <p><%= message %></p>
+    <p><%= error.status %></p>
+</div>
+
+<pre><%= error.stack %></pre>
+
+<%- include('partials/end.ejs') %>

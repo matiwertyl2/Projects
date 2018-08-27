@@ -1,0 +1,36 @@
+<!-- requires /scripts/CodeEditor.js -->
+<div class="code-editor-container" id='<%= editorId %>'>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="h5 text-right">Your favourite language:</div>
+        </div>
+        <div class="col-md-6">
+            <%- include('dropdown.ejs', {
+                defaultOption: defaultLanguage,
+                options: (function() {
+                    const options = {};
+                    for(var key in languages) {
+                        options[key] = languages[key].name;
+                    }
+                    return options;
+                })()
+            }) %>
+        </div>
+    </div>
+    <div class="row">
+        <div class="code-editor row"></div>
+    </div>
+    <!-- from https://codepen.io/Sebus059/pen/MwMQbP -->
+    <div class="form-group">
+        <input type='file' class='input-ghost' style='visibility:hidden; height:0'>
+		<div class="input-group input-file">
+			<span class="input-group-btn">
+        		<button class="btn btn-default btn-choose" type="button">You can also send file!</button>
+    		</span>
+    		<input type="text" class="form-control" placeholder='Choose a file...' />
+    		<span class="input-group-btn">
+       			 <button class="btn btn-warning btn-reset" type="button">Reset</button>
+    		</span>
+		</div>
+	</div>
+</div>

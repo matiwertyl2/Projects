@@ -1,0 +1,159 @@
+<link href="/stylesheets/chat.css" rel="stylesheet" type="text/css">
+
+
+<div class="container" style="left: <%= chatLeft %>px; width:302px;">
+    <div class="row chat-window col-xs-5 col-md-3" id="chat_window_1" style="margin-left:10px;">
+        <div class="col-xs-12 col-md-12">
+        	<div class="panel panel-default">
+                <div class="panel-heading top-bar">
+                    <div class="col-md-8 col-xs-8">
+                        <h3 class="panel-title"><span class="glyphicon glyphicon-comment"></span> #<%= gameId %></h3>
+                    </div>
+                    <div class="col-md-4 col-xs-4" style="text-align: right;">
+                        <% if (chatSound) { %>
+                            <a><span id="mute_chat_window" class="glyphicon glyphicon-volume-up"></span></a>
+                        <% } else { %>
+                            <a><span id="mute_chat_window" class="glyphicon glyphicon-volume-off"></span></a>
+                        <% } %>
+                        <a><span id="minim_chat_window" class="panel-collapsed glyphicon glyphicon-plus icon_minim"></span></a>
+                        <!-- <a href="#"><span class="glyphicon glyphicon-remove icon_close" data-id="chat_window_1"></span></a> -->
+                    </div>
+                </div>
+                <div class="panel-body-footer" style="display: none">
+                    <div id="messages" class="panel-body msg_container_base">
+                    </div>
+                    <div class="panel-footer">
+                        <div class="input-group">
+                            <input id="btn-input" type="text" class="form-control input-sm chat_input" placeholder="Write your message here..." />
+                            <span class="input-group-btn">
+                            <button id="btn-send" class="btn btn-primary btn-sm">Send</button>
+                        </span>
+                        </div>
+                    </div>
+                </div>
+    		</div>
+        </div>
+    </div>
+    
+    <!-- <div class="btn-group dropup">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <span class="glyphicon glyphicon-cog"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu" role="menu">
+            <li><a href="#" id="new_chat"><span class="glyphicon glyphicon-plus"></span> Novo</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-list"></span> Ver outras</a></li>
+            <li><a href="#"><span class="glyphicon glyphicon-remove"></span> Fechar Tudo</a></li>
+            <li class="divider"></li>
+            <li><a href="#"><span class="glyphicon glyphicon-eye-close"></span> Invisivel</a></li>
+        </ul>
+    </div> -->
+</div>
+
+<script type="text/javascript" src="/scripts/SocketIOChat.js"></script>
+
+<script>
+    $(document).on('click', '.panel-heading span.icon_minim', function (e) {
+    var $this = $(this);
+    if (!$this.hasClass('panel-collapsed')) {
+        $this.parents('.panel').find('.panel-body-footer').slideUp({duration: 200});
+        $this.addClass('panel-collapsed');
+        $this.removeClass('glyphicon-minus').addClass('glyphicon-plus');
+    } else {
+        $this.parents('.panel').find('.panel-body-footer').slideDown({duration: 200});
+        $this.removeClass('panel-collapsed');
+        $this.removeClass('glyphicon-plus').addClass('glyphicon-minus');
+        var messages = $('#messages');
+        messages.scrollTop(messages.prop("scrollHeight"));
+    }
+});
+$(document).on('focus', '.panel-footer input.chat_input', function (e) {
+    var $this = $(this);
+    if ($('#minim_chat_window').hasClass('panel-collapsed')) {
+        $this.parents('.panel').find('.panel-body-footer').slideDown({duration: 200});
+        $('#minim_chat_window').removeClass('panel-collapsed');
+        $('#minim_chat_window').removeClass('glyphicon-plus').addClass('glyphicon-minus');
+    }
+});
+$(document).on('click', '#new_chat', function (e) {
+    var size = $( ".chat-window:last-child" ).css("margin-left");
+     size_total = parseInt(size) + 400;
+    alert(size_total);
+    var clone = $( "#chat_window_1" ).clone().appendTo( ".container" );
+    clone.css("margin-left", size_total);
+});
+$(document).on('click', '.icon_close', function (e) {
+    //$(this).parent().parent().parent().parent().remove();
+    $( "#chat_window_1" ).remove();
+});
+
+var soundOn = <%= chatSound %>;
+$(document).on('click', '#mute_chat_window', function(e) {
+    if (soundOn) {
+        $('#mute_chat_window').removeClass('glyphicon-volume-up');
+        $('#mute_chat_window').addClass('glyphicon-volume-off');
+    }
+    else{
+        $('#mute_chat_window').removeClass('glyphicon-volume-off');
+        $('#mute_chat_window').addClass('glyphicon-volume-up');
+    }
+
+    soundOn = !soundOn;
+
+    // update here
+    var data = {
+        sound: soundOn
+    }
+
+    //postUpdateUser('/updateUser/chatSound', data);
+});
+
+var isDown = false;
+var offsetX = 0;
+$(document).on('mousedown', '#chat_window_1', function(e) {
+    isDown = true;
+    offsetX = $('#chat_window_1').css("left");
+    offsetX = offsetX.substring(0, offsetX.length - 2);
+    offsetX = offsetX - e.clientX;
+});
+
+function postUpdateUser(url, data) {
+    fetch(url, {
+        method: 'post',
+        credentials: 'include',
+        body: JSON.stringify(data),
+        headers: new Headers({
+            'Content-Type': 'application/json'
+        })
+    }).then(res => res.json())
+    .catch(error => console.error('Error:', error))
+    .then(response => console.log('Success:', response));
+}
+
+$(document).on('mouseup', '', function() {
+    isDown = false;
+
+    leftValue = $("#chat_window_1").css("left")
+    leftValue = leftValue.substring(0, leftValue.length - 2);
+    // update here
+    var data = {
+        left: leftValue
+    }
+
+    //postUpdateUser('/updateUser/chatPosition'. data);
+});
+
+$(document).on('mousemove', '', function(event) {
+    event.preventDefault();
+    if (isDown) {
+        mousePosition = {
+            x : event.clientX,
+        };
+
+        var newLeftPos = mousePosition.x + offsetX;
+        if (newLeftPos >= 50 && newLeftPos <= document.body.offsetWidth - 302 - 50) {
+            $("#chat_window_1").css("left", (mousePosition.x + offsetX) + 'px');
+        }
+    }
+});
+</script>

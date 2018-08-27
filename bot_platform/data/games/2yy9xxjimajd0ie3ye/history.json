@@ -1,0 +1,1 @@
+{"updates":[{"turn":1,"description":{"board":[[-1,-1,-1,1,-1],[-1,-1,-1,-1,-1],[-1,-1,-1,-1,-1],[0,-1,-1,-1,-1],[-1,-1,-1,-1,-1]]}}],"fails":[{"player":0,"reason":"Bot has terminated unexpectedly","turn":1}],"results":[2,1],"initialInfo":{}}

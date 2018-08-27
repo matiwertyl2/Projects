@@ -1,0 +1,128 @@
+<head>
+    <title>TicTacToe</title>
+    <style>
+    * {
+       margin: 0;
+       padding: 0;
+       box-sizing: border-box;
+       margin-left: 50px;
+       width: 200px;
+    }
+
+    body {
+       font: 13px Helvetica, Arial;
+       width: 200px;
+    }
+
+    form {
+       background: grey;
+       padding: 5px;
+       position: fixed;
+       bottom: 0;
+       width: 50%;
+    }
+
+    form input {
+       border: 0;
+       padding: 10px;
+       width: 90%;
+       margin-right: .5%;
+    }
+
+    form button {
+       width: 100px;
+       background: red;
+       font-size: 12px;
+       border: none;
+       padding: 10px 0;
+    }
+
+    #usersForm {
+        width: 200px;
+    }
+
+    #messages {
+       list-style-type: none;
+       margin: 0;
+       padding: 0;
+    }
+
+    #messages li {
+       padding: 10px 12px;
+       font-size: 14px;
+    }
+
+    #messages li:last-child {
+       margin-bottom: 43px;
+    }
+
+    #messages li:nth-child(odd) {
+       background: #ddd;
+    }
+
+    #messages li:nth-child(even) {
+       background: #bbb;
+    }
+    </style>
+</head>
+
+<body>
+    <ul id="usersForm"></ul>
+    <ul id="messages"></ul>
+
+    <form action="">
+        <input id="msg" autocomplete="off" /><button>Send</button>
+    </form>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var form = $('#form');
+        var messages = $('#messages');
+        var usersForm = $('#usersForm');
+
+        var socket = io({
+            query: {
+                room: 'tictactoe'
+            }
+        });
+
+        socket.on('connect', function() { 
+            console.log('connected');
+            socket.emit('authentication', null);
+        });
+
+        socket.on('authentication', function(msg) {
+            alert('Great! You got authenticated.');
+
+            msg.forEach(message => {
+                var user = message.userName;
+                var message = message.message;
+                messages.append($('<li>').text(user + ": " + message));
+                $("html, body").scrollTop($(document).height());
+            });
+        });
+
+        socket.on('updateUserNames', function(userNames) {
+            usersForm.empty();
+
+            userNames.forEach(userName => {
+                usersForm.append($('<li>').text(userName));
+            });
+        });
+
+        $('form').submit(function() {
+            var message = $('#msg').val();
+            socket.emit('message', message);
+            $('#msg').val('');
+            return false;
+        });
+
+        socket.on('message', function(data) {
+            var user = data.user;
+            var message = data.message;
+            messages.append($('<li>').text(user + ": " + message));
+            $("html, body").scrollTop($(document).height());
+        });
+    </script>
+</body>

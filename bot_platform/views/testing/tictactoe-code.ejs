@@ -1,0 +1,107 @@
+<%- include('../partials/head.ejs', { title: 'Testowanie' }) %>
+<%- include('../partials/alert.ejs') %>
+
+<style>
+    #arena {
+        width: 600px;
+        height: 400px;
+    }
+    #loading {
+        line-height: 400px;
+        text-align: center;
+    }
+    textarea {
+        min-width: 300px;
+        min-height: 300px;
+        margin: 20px;
+    }
+    .code-editor {
+        min-width: 300px;
+        min-height: 300px;
+        margin: 20px;
+        border: 1px solid gray;
+    }
+</style>
+<div class="row">
+    <div class="col-md-6">
+        <%- include('../partials/code-editor', {
+            editorId: 'code1',
+            defaultLanguage: 'cpp'
+        }) %>
+    </div>
+    <div class="col-md-6">
+        <%- include('../partials/code-editor', {
+            editorId: 'code2',
+            defaultLanguage: 'cpp'
+        }) %>
+    </div>
+</div>
+<button class="btn btn-primary" id="fight">Fight!</button>
+<div id="arena">
+    <div id="loading">
+        Ładowanie...
+    </div>
+    <div id="animation">
+        <canvas id="canvas" width="600px" height="400px" style="border:1px solid #000000;"/>
+    </div>
+</div>
+<script>
+    $('#animation').hide();
+    $('#arena').hide();
+    $('#fight').on('click', () => {
+        $('#arena').show();
+        $('#send-code').hide();
+        var data = new FormData();
+        ['code1', 'code2'].forEach(id => {
+            codeEditorText(id).then(console.log);
+            data.append(id, codeEditorFile(id));
+        });
+        fetch('/testing/run-tictactoe-code', {
+            method: 'post',
+            body: data
+        })  .then(response => response.json())
+            .then(response => {
+                console.log(response);
+                $('#loading').hide();
+                $('#animation').show();
+                drawAnimation(canvas, response);
+            })
+            .catch(console.error);
+    });
+
+    function drawAnimation(canvas, history) {
+        var foo = (function () {
+            var pos = 0;
+            
+            function sign(nr) {
+                if (nr == -1) return "";
+                if (nr == 0) return "O";
+                if (nr == 1) return "X";
+            }
+
+            function draw () {
+                if (pos == history.updates.length) pos--;
+
+                var ctx = canvas.getContext("2d");
+
+                ctx.fillStyle = "red";
+                ctx.fillRect(0,0,300,300);
+                ctx.fillStyle = "black";
+                ctx.font = "100px Arial";
+                for (var i =0; i<3; i++) {
+                    for (var j=0; j<3; j++) {
+                        ctx.fillText(sign(history.updates[pos].description.board[i][j]), j*100, (i+1)*100);
+                    }
+                }
+                pos++;
+            }
+
+            return draw;
+        })();
+
+        setInterval(foo, 1000);
+    }
+</script>
+
+<%- include('../partials/code-editor-init.ejs') %>
+<%- include('../partials/end.ejs') %>

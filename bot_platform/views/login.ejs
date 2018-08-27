@@ -1,0 +1,28 @@
+<%- include('partials/head.ejs', { title: 'Login' }) %>
+<%- include('partials/auto-menu.ejs') %>
+<%- include('partials/alert.ejs') %>
+
+<header>
+        <h2 class="text-center">    
+            <p class="text-primary">
+               Welcome to Bot Platform !
+            </p>
+        </h2>
+    </header>
+
+<form method="post" action="/login" class="form-login">
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-md-offset-4">
+            <div class="account-wall">
+                <input type="email" name="email" class="form-control" placeholder="Email" required autofocus>
+                <input type="password" name="password" class="form-control" placeholder="Password" required>
+                <input type="submit" class="btn btn-lg btn-primary btn-block" value="Login" >
+                <input type="hidden" name="redirect" value="<%= locals.next || '/' %>">
+            </div>
+            <a href="/signup" class="text-center new-account">Create an account </a>
+        </div>
+    </div>
+    
+</form>
+
+<%- include('partials/end.ejs') %>

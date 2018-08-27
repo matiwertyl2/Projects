@@ -1,0 +1,147 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var app = require('../app');
+var debug = require('debug')('todoAPI:server');
+var http = require('http');
+var settings = require('../config/settings.js');
+
+// for adding messages
+var mongoose = require('mongoose');
+
+/**
+ * Get port from environment and store in Express.
+ */
+var port = normalizePort(process.env.PORT || '3000');
+app.set('port', port);
+
+/**
+ * Create HTTP server.
+ */
+var server = http.createServer(app);
+
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+server.listen(port);
+server.on('error', onError);
+server.on('listening', onListening);
+
+/**
+ * Server communication sockets and passport intgeration
+ */
+// Socket with passport integration
+var passportSocketIo = require('passport.socketio');
+var io = require('socket.io').listen(server);
+
+var store = require('../app').sessionStore;
+var cookieParser = require('../app').cookieParser;
+
+io.use(passportSocketIo.authorize({
+    key: 'connect.sid',
+    secret: settings.secret,
+    store: store,
+    cookieParser: cookieParser,
+
+    success:      onAuthorizeSuccess,  // Called when the socket is authorized by passport
+    fail:         onAuthorizeFail,     // Called when there is an error with socket
+    // don't use passport here!
+}));
+
+/**
+ * Set up socket.io
+ */
+
+const chat = require('../backend/chat');
+chat.initialize(io);
+
+const liveRanking = require('../backend/liveRanking');
+liveRanking.initialize(io.of('/ranking'));
+
+function onAuthorizeSuccess(data, accept) {
+  // This method make sure that the socket is authorized by passport!
+  console.log('successful connection to socket.io (authorized by passport)');
+  
+  accept();
+
+  // TODO: Implement some kind of timeout here
+}
+  
+function onAuthorizeFail(data, message, error, accept) {
+  if(error)
+    throw new Error(message);
+
+  console.log('failed connection to socket.io:', message);
+  
+  if(error)
+    accept(new Error(message)); // rejects connection from the user
+  // this error will be sent to the user as a special error-package
+  // see: http://socket.io/docs/client-api/#socket > error-object
+}
+
+var cookie = require('cookie');
+var signature = require('cookie-signature');
+var secret = 'secret';
+
+/**
+ * Normalize a port into a number, string, or false.
+ */
+
+function normalizePort(val) {
+  var port = parseInt(val, 10);
+
+  if (isNaN(port)) {
+    // named pipe
+    return val;
+  }
+
+  if (port >= 0) {
+    // port number
+    return port;
+  }
+
+  return false;
+}
+
+/**
+ * Event listener for HTTP server "error" event.
+ */
+
+function onError(error) {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  var bind = typeof port === 'string'
+    ? 'Pipe ' + port
+    : 'Port ' + port;
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error(bind + ' requires elevated privileges');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error(bind + ' is already in use');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+}
+
+/**
+ * Event listener for HTTP server "listening" event.
+ */
+
+function onListening() {
+  var addr = server.address();
+  var bind = typeof addr === 'string'
+    ? 'pipe ' + addr
+    : 'port ' + addr.port;
+  console.log('Listening on ' + bind);
+}

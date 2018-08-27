@@ -1,0 +1,8 @@
+{
+    "bot.cpp": {
+        "name": "Random Bot"
+    },
+    "kozak.cpp": {
+        "name": "Master Bot"
+    }
+}

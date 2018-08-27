@@ -1,0 +1,76 @@
+<%- include('partials/head.ejs', { title: 'BotPlatform' }) %>
+<%- include('partials/auto-menu.ejs') %>
+<%- include('partials/alert.ejs') %>
+
+<div class="card-header">
+    <h2>
+        <center>
+            <p class="text-primary">
+                Welcome to Bot Platform !
+            </p>
+        </center>
+    </h2>
+</div>
+
+
+<div class="well">
+<h3> 
+    Train your coding skills and creativity.
+</h3>
+<h5> 
+    <p class="text-muted">
+        Write bots in your favourite language and face other players. 
+        You can even upload your own games.
+    </p>
+</h5>
+</div>
+
+<div class="well">
+<h3>
+    Get to know smart people with similar interests.
+</h3>
+<h5>
+    <p class="text-muted">
+
+        You can chat with other players in game rooms.
+    </p>
+</h5>
+</div>
+
+<div class="well">
+<h3>
+    Have fun !
+</h3>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <h3 class="text-center">
+            Example game
+        </h3>
+    </div>
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <%- include('partials/viewer.ejs', {
+            id: 'viewer',
+            canvasWidth: 540,
+            canvasHeight: 360
+        }) %>
+    </div>
+    <div class="col-md-12" style="height: 50px"></div>
+</div>
+
+<script> dontAutoplay = true; </script>
+<%- include('partials/viewer-init.ejs', { gameScript: '/gameScripts/ACHT/script.js' }) %>
+<script>
+    fetch('/submit/replay/example')
+        .then(response => response.json())
+        .then(response => {
+            console.log(response);
+            if(response) {
+                viewGame('viewer', response);
+            }
+        })
+        .catch(console.error);
+</script>
+
+<%- include('partials/end.ejs') %>

@@ -1,0 +1,30 @@
+<h4><strong>Brief</strong></h4>
+    In the game 2 players move in four directions:
+    <ul>
+        <li>UP</li>
+        <li>DOWN</li>
+        <li>RIGHT</li>
+        <li>LEFT</li>
+    </ul>
+    In each turn player has to make one move. Each player leaves a trace of his movement.
+    When the player hits the border of the board or the trace of one of the players 
+    (including his own trace) he loses. The aim of the game is to outlive the opponent.
+
+<h4><strong>Input</strong></h4>
+The input consist of several parts:
+<ul>
+    <li>In the first line there are 2 integers N, nr denoting the size of 
+        the board and player number</li>
+    <li>In each the next 2 lines there are 2 integers r, c, denoting the position of
+        the player number k (k = 0, 1). r - row number, c - column number.
+    </li>
+    <li> In the next N lines there are N integers. That describes the board state. Their values mean:
+        <ul> 
+            <li>-1 - the field is empty</li>
+            <li>i - the field is occupied by the trace of i-th player</li>
+        </ul>
+    </li>
+</ul>
+
+<h4><strong>Output</strong></h4>
+You should print one string ("UP", "DOWN", "RIGHT", "LEFT") - your move.
