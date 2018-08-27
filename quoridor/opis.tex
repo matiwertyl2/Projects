@@ -1,0 +1,67 @@
+\documentclass{article}
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+
+\title{Dokumentacja Projektu "Quoridor"}
+\author{Mateusz Hazy}
+
+\newcommand{\akapit}{\hspace{0.5cm}}
+\newcommand{\g}[1]{\textbf{#1}}
+
+\begin{document}
+	\maketitle
+	\section*{Wstęp}
+		\akapit Projekt "Quoridor" to prosta implementacja popularnej gry planszowej $quoridor$. Składa się z kilku modułów napisanych w C przy użyciu biblioteki GTK+ 3, folderów z grafiką oraz plików tekstowych.
+	\section*{Moduły}
+		\begin{enumerate}
+			\item \textbf{stale\_zmienne.h} \\
+			Moduł zawierający wszystkie zmienne globalne, struktury oraz tablice
+			\begin{itemize}
+				\item \g{SIZE\_OF\_BOARD} - rozmiar komórek planszy
+				\item  \g{SIZE\_OF\_GRID} - rozmiar planszy
+				\item \g{INIT\_WALLS} - liczba początkowych ściań
+				\item \g{pole} - struktura łącząca dany button z jego współrzędnymi na 								planszy
+				\item \g{gracz} - struktura przechowująca wszystkie informacje o danym graczu: nazwę, liczbę ścian, pozycję, przypisane do niego labele, adres obrazka, stały numer oraz pozycje wygrywające
+				\item \g{gracz A, B} - A to gracz wykonujący ruch, B- oczekujący.
+				\item \g{grid\_sizes, WALLS}- tablice z odpowiednimi wielkościami planszy i 						liczbą ścian dla danego trybu rozgrywki
+				\item \g{plansza, sciany, used} - tablice z informacjami o stanie rozgrywki
+				\item \g{polecenia\_rozgrywki, scianyA, scianyB}- wskaźniki na labele 									wyświetlane podczas rozgrywki
+				\item \g{okienko\_aktywne} - wskaźnik na aktualnie otwarte okienko
+				
+			\end{itemize}
+			\item \textbf{rozgrykwa.h} \\
+			\akapit Moduł z funkcjami dotyczącymi mechanizmu rozgrywki
+			\begin{itemize}
+				\item \g{init\_players} - funkcja ustalająca początkowe pozycje i liczbę ścian graczy
+				\item  \g{umiesc\_gracza} - ustawia gracza na danej pozycji
+				\item \g{przesun\_gracza} - przesuwa gracza na wybraną pozycję
+				\item \g{miedzy\_sciana} - czy istnieje ściana między danymi polami
+				\item \g{pola\_sasiadnie} - czy dane pola są sąsiędnie
+				\item \g{clear\_sciany, clear\_used} - funkcje czyszczące tablice ściany oraz used
+				\item \g{zwyciestwo} - czy gracz odniósł zwycięstwo
+				\item \g{dfs, czy\_blokuje} - funkcje sprawdzające, czy ewentualne postawienie 	ściany nie uniemożliwi zwycięstwa przeciwnikowi, bądź samemu sobie
+				\item \g{dozwolony\_(ruch, sciana pionowa, sciana pozioma)} - funkcje 								sprawdzające, czy wybrana przez gracza akcja jest dozwolona
+				\item \g{(postaw, podswietl, zgas)\_sciane\_(pionowa, pozioma)} - wykonują akcje jak w nazwie
+				\item \g{zmiana\_ruchu} - zamienia wskazniki gracza wykonującego ruch z 								graczem oczekującym
+				\item \g{ruch\_(sciana pionowa, sciana pozioma, pole)} - funkcje ruchu 								wywoływane po kliknięciu na odpowiednie pola planszy przez gracza
+				\item \g{(enter, leave)\_sciana\_(pionowa, pozioma)} - funkcje wywoływane po najechaniu na obszar ścian
+				\item \g{new\_button\_(sciana pionowa, pozioma, pole)} - funkcje zwracające 	widget typu jak w nazwie
+			\end{itemize}
+			\item \textbf{app\_manager.h} \\
+			\akapit Moduł z funkcjami związanymi z tworzeniem interfejsu i nawigacją wewnątrz 					aplikacji
+			\begin{itemize}
+				\item \g{generuj\_(okienko settings, okienko instructions, okienko gry, 							strone glowna)} - funkcje tworzące odpowiednie okienka aplikacji
+				\item \g{generuj\_(pole , interfejs gry)} - funkcje pomocnicze do stworzenia okienka gry
+				\item Funkcję wykonujące działania jak w nazwie:\g{ powrot\_do\_glownej, restart\_game, start\_game, wczytaj\_gre, zapisz\_gre, go\_to\_settings, go\_to\_instructions}
+			\end{itemize}
+		\end{enumerate}
+		\section*{Opis Działania}
+		\akapit Rozgrywka polega na naprzemiennym wykonywaniu ruchów graczy. Każdy z nich polega na kliknięciu na odpowiednie pole (ściana lub zwykłe pole). Jeśli dany ruch jest dozwolony, nastąpi zmiana ruchu i wskaźników graczy. W momencie zwycięstwa, ruchy zostają uniemożliwione. 
+		\par Użytkownik może zmienić nazwy graczy, wielkość planszy ($5x5, 9x9, 11x11$), zapisać oraz wczytać grę. 
+		\par Do zapisu i wczytywania gry używany jest plik $zapis\_gry.txt$ przechowujący niezbędne informacje o ostatnim zapisanym stanie gry.
+		\par W pliku $instrukcje.txt$ przechowywana jest treść wyświetlana w okienku $instrucions$. 
+		\par Foldery $images$ oraz $css$ zawierają pliki związane z grafiką
+		
+		
+\end{document}
+

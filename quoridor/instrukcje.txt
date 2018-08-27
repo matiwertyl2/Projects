@@ -1,0 +1,20 @@
+	1. W Quoridor gra 2 graczy, którzy wykonują 
+ruch na zmianę
+
+	2. Na początku pionki graczy znajdują się na 
+środkach przeciwległych krańcowych rzędów planszy i mają 
+do dyspozycji po 10 ścian.
+
+	3.  Celem gry jest jako pierwszy dotrzeć do 
+startowego rzędu przeciwnika.
+
+	4. Ruch polega na przemieszczeniu się o jedno 
+pole w 4 kierunkach lub postawieniu 
+ogrodzenia uniemożliwiające przejście.
+
+	5. Nie wolno całkowicie zablokować przeciwnika.
+zawsze musi istnieć przynajmniej jedno przejście.
+
+	6. Istnieje możliwość przeskoczenia pionka 
+przeciwnika w sytuacji, gdy stoją naprzeciwko siebie w 
+sąsiadujących polach.
