@@ -1,0 +1,7 @@
+fun maybe_runtime (n : int) : int =
+  let x= n mod 5 in
+    if n div x < n then 1
+    else 0
+
+
+input x in maybe_runtime x

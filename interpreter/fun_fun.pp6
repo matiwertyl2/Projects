@@ -1,0 +1,10 @@
+fun f1 (n : int) : int =n+1
+
+fun f2 (n:int) : int = n
+
+fun f3 (n : int) : int = f2(f1(n))
+
+fun f4 (n: int) : int= f3 (f1(n)+f2(n))
+
+
+input x in f4(x)

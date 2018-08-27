@@ -1,0 +1,4 @@
+input x in
+  match x with
+    | [] -> 1
+    | a::b -> 0

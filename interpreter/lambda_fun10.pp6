@@ -1,0 +1,37 @@
+fun composition ( x : (int -> int) * (int -> int)) : int -> int =
+  let f = fst x in
+    let g = snd x in
+      fn (a : int ) -> f ( g a )
+
+fun c (x : int * (int -> int)) : int -> int =
+  let a = fst x in
+    let f = snd x in
+      fn (y : int) -> a * f y
+
+fun sum (x : (int -> int) * (int -> int) ) : int -> int  =
+  let f = fst x in
+    let g = snd x in
+      fn (y : int) -> f y + g y
+
+
+fun pow (x : int * int) : int =
+  let base = fst x in
+    let exponent = snd x in
+      if exponent=0 then 1
+      else base * pow (base, exponent-1)
+
+
+fun exp (x : int) : int =
+  pow (2, x)
+
+fun square (x : int) : int = x*x
+
+fun cube (x : int) : int = x*x*x
+
+fun id (x : int ) : int = x
+
+
+input x in
+  let g = sum (square, sum (id, cube)) in
+  let f = c (5, composition (exp, g) ) in
+    f x

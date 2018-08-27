@@ -1,0 +1,9 @@
+fun jeden (u : unit) :int = 1
+
+fun dwa (u : unit) : int =  2
+
+fun trzy (u : unit) : int = 3
+
+fun res (u : unit) : int = jeden () + dwa () + trzy ()
+
+in res()

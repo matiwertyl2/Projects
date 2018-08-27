@@ -1,0 +1,12 @@
+fun fib1 (p : (int * int) * int) : int =
+  let f1= fst (fst p) in
+    let f2 = snd (fst p) in
+      let n = snd p in
+        if n=0 then f1
+        else fib1 ((f1+f2, f1), n-1)
+
+
+fun fib (n : int) : int = fib1 ((1, 1), n-1)
+
+
+input n in fib n

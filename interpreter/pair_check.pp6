@@ -1,0 +1,6 @@
+fun maks (x : int * int) : int =
+  if fst x > snd x then fst x
+  else snd x
+
+
+input x y in maks((x, y))

@@ -1,0 +1,14 @@
+fun decompose(n : int) : int list =
+  if n=0 then [0] : int list
+  else if n=1 then [1] :int list
+  else (n mod 2)::(decompose(n div 2))
+
+fun compose (l : int list) : int =
+  match l with
+    | [] -> 0
+    | x::xs -> x+compose(xs)*10
+
+fun toBinary (n : int) : int =
+  compose(decompose(n))
+
+input n in toBinary(n)

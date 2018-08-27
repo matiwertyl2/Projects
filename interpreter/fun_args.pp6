@@ -1,0 +1,29 @@
+fun listbool (l : bool list) : int =
+  match l with
+    | [] -> 0
+    | x::xs ->
+      if x then 1+ listbool (xs)
+      else listbool (xs)
+
+fun by2 (l : int list) : bool list =
+  match l with
+    | [] -> [] : bool list
+    | x::xs ->
+      if x mod 2 =0 then true::by2(xs)
+      else false::by2(xs)
+
+
+fun getfirst (l : (int * int) list) : int list =
+  match l with
+    | [] -> [] : int list
+    | x::xs -> (fst x)::getfirst(xs)
+
+fun double (l : int list) : (int * int) list =
+  match l with
+    | [] ->[] : (int * int) list
+    | x::xs -> (x, x)::double(xs)
+
+fun zabawa (x : int list) : int =
+  listbool (by2 (getfirst (double (x))))
+
+input a b c in zabawa ([a, b, c] : int list)

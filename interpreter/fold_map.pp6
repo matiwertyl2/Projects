@@ -1,0 +1,19 @@
+fun fold (x : ((int * int) -> int) * ( int * (int list)) ) : int =
+  let f= fst x in
+    let a = fst (snd x) in
+      let l= snd (snd x) in
+        match l with
+          | [] -> a
+          | y::ys -> fold (f , (f (a, y), ys ))
+
+fun map (x : (int -> int) * (int list)) : int list =
+  let f = fst x in
+    let l = snd x in
+      match l with
+        | [] -> [] : int list
+        | y::ys ->  (f y)::(map (f, ys))
+
+input x y z in
+  let f = fn (x : int * int) -> (fst x) + (snd x) in
+    let g = fn (x : int) -> x*x in
+    fold (f, (0, ( map (g ,[x, y, z] : int list))))

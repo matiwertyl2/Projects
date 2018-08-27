@@ -1,0 +1,7 @@
+fun head (x : int list) : int =
+  match x with
+    | [] -> 0
+    | h::t -> h
+
+
+input a b c in head(a::b::c::[] : int list)

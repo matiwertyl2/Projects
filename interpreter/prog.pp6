@@ -1,0 +1,8 @@
+fun f(x:int list):int =
+  match x with
+  [] -> 0
+  | x::x -> 1 + f x
+
+in match [1, 2, 3]:int list
+  with [] -> 0
+  | x::x -> f x

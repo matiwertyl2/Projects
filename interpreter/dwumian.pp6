@@ -1,0 +1,11 @@
+fun silnia (n : int ) : int =
+  if n=0 then 1
+  else n* silnia (n-1)
+
+fun dwumian (p : int *int) : int =
+  let n = fst p in
+    let k = snd p in
+      silnia(n) div (silnia (k) * silnia (n-k))
+
+
+input n k in dwumian (n, k)

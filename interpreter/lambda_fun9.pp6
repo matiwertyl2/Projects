@@ -1,0 +1,13 @@
+fun f (x : int list) : int list = x
+
+fun g (x : int list) : int =
+  match x with
+    | [] -> 1
+    | y::ys -> y*(g ys)
+
+input x in
+  let f = fn (a : int) ->
+    let l = f [a, a, a] : int list in
+      g l
+  in
+    f x

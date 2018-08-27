@@ -1,0 +1,5 @@
+fun f (x : int) : int =
+  let g = fn (x : int) -> x div (x-1) in
+    g x
+
+input x in f x

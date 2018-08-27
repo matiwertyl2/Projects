@@ -1,0 +1,5 @@
+fun f (n : int) : int = n+1
+
+fun g (n : int) : bool = true
+
+input x in f (g(x))

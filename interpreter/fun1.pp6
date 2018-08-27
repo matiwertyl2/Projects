@@ -1,0 +1,16 @@
+fun by5 (n : int) : bool =
+  if n mod 5 = 0 then true
+  else false
+
+fun by3 (n : int) : bool =
+  if n mod 3 =0 then true
+  else false
+
+fun by15 (n : int) : bool =
+  if by3 n and by5 n then true
+  else false
+
+
+input x in
+  if by15 x then 1
+  else 0

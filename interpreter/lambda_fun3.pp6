@@ -1,0 +1,7 @@
+fun f (x : int -> int -> int) : int -> int -> int = x
+
+
+input x in
+  let g = fn (a : int) -> fn ( b: int) -> a+b in
+    let c = f g in
+      x

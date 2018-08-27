@@ -1,0 +1,6 @@
+fun add (l : int list) : int =
+  match l with
+    | [] -> 0
+    | x :: xs -> x+ add(xs)
+
+input x y z in add ([x, y, z] : int list)

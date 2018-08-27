@@ -1,0 +1,12 @@
+fun f (n : int) : int list =
+  let x = [] : bool in
+    n::x
+
+
+fun g (l : int list) : int =
+  match l with
+    | [] -> 0
+    | x::xs -> x+g(xs)
+
+
+input x in  g ( f ( x ) )

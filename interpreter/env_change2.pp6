@@ -1,0 +1,11 @@
+fun app (x : (int -> int) * int) : int =
+  let f = 5 in
+    let g = f in
+    (fst x) (snd x)  + f + g
+
+in
+
+let a = 2 in
+  let f = fn (x :int) -> a+x in
+    let g = fn (x : int) -> (f x) + a*x in
+      app (g, 3)
