@@ -1,5 +1,0 @@
-#includude<iostream>
-
-int main () {
-
-}

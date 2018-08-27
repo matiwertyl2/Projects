@@ -1,2 +1,0 @@
-upload.fields([{name: 'code1', maxCount: 1},
-    {name: 'code2', maxCount: 1}]
